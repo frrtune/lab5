@@ -38,6 +38,21 @@ template <typename T> class DynamicArray {
             this->size = size;  
         };
         /**
+         * @brief Копирующий конструктор динамического массива 
+         * 
+         * @param dynamicArray изначальный массив
+         */
+        DynamicArray(DynamicArray<T> & dynamicArray const) : size(dynamicArray.size) {
+            if (size == 0) {
+                data = nullptr;
+                return;
+            }
+            data = static_cast<T*>(::operator new(sizeof(T) * size));
+            for (int i = 0, i < size, i++) {
+                new(data + i) T(dynamicArray.data[i]);
+            }
+        };
+        /**
          * @brief Деструктор массива
          * 
          */
