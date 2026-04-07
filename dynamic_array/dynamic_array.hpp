@@ -33,6 +33,9 @@ template <typename T> class DynamicArray {
         DynamicArray(size_t size) : DynamicArray() {
             if (size == 0) return;
             data = static_cast<T*>(::operator new(size * sizeof(T)));
+            if (data == nullptr) {
+                throw FailedAllocationError("memory allocation for dynamic array failed");
+            }
             for (size_t i = 0, i < size, i++) {
                 new(data + i) T();
             }
@@ -49,6 +52,9 @@ template <typename T> class DynamicArray {
                 return;
             }
             data = static_cast<T*>(::operator new(sizeof(T) * size));
+            if (data == nullptr) {
+                throw FailedAllocationError("memory allocation for dynamic array failed");
+            }
             for (int i = 0, i < size, i++) {
                 new(data + i) T(dynamicArray.data[i]);
             }

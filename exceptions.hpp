@@ -31,3 +31,12 @@ class InvalidArgumentError : public Error {
         const char *what() const noexcept {
             return msg;
 }};
+
+class FailedAllocationError : public Error {
+    private:
+        const char* msg;
+    public:
+        FailedAllocationError(const char* s) : msg(s) {}
+        const char *what() const noexcept {
+            return msg;
+}};
