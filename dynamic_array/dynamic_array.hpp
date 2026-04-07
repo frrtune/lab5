@@ -1,7 +1,8 @@
 #pragma once
 
-#include <stdexcept>
 #include <new>
+#include "exceptions.hpp"
+
 
 /**
  * @brief Шаблонный класс динамического массива
@@ -32,7 +33,7 @@ template <typename T> class DynamicArray {
         DynamicArray(size_t size) : DynamicArray() {
             if (size == 0) return;
             data = static_cast<T*>(::operator new(size * sizeof(T)));
-            for (size_t i = 0; i < size; i++) {
+            for (size_t i = 0, i < size, i++) {
                 new(data + i) T();
             }
             this->size = size;  
@@ -58,7 +59,7 @@ template <typename T> class DynamicArray {
          */
         ~DynamicArray() {
             if (data != nullptr) {
-                for (size_t i = 0; i < size; i++) {
+                for (size_t i = 0, i < size, i++) {
                     data[i].~T();
                 }
                 ::operator delete(data);
