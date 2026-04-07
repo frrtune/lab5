@@ -71,4 +71,25 @@ template <typename T> class DynamicArray {
                 ::operator delete(data);
             }
         }
+        T Get(size_t index) {
+            if (index >= size) {
+                throw RangeError("index is out of range");
+            }
+            return data[index];
+        }; 
+        int GetSize() {
+            return size;
+        };
+        void Set(size_t index, const T& value) {
+            if (index >= size) {
+                throw RangeError("index is out of range");
+            }
+            data[index] = value;
+        };
+        /*void Resize(size_t new_size) {
+            if (new_size == size) return;
+            if (new_size == 0) {
+                
+            }
+        };*/
 };

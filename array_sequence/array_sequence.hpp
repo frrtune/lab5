@@ -5,14 +5,13 @@
 
 template <typename T> class ArraySequence : public Sequence <T> {
     private:
-        DynamicArray<T*> buff;
-        ArraySequence(DynamicArray<T>* arr) : buff(arr) {};
+        DynamicArray<T> buff;
+        ArraySequence(const DynamicArray<T>& arr) : buff(arr) {};
     public:
-        /*ArraySequence() : buff(new DynamicArray<T>()) {}
-        ArraySequence(const T* data, int size) : buff(new DynamicArray<T>(size)) {
-            for (int i = 0, i < size, i++) {
-                
+        ArraySequence() : buff() {}
+        ArraySequence(const T* data, int size) : buff(size) {
+            for (int i = 0; i < size; i++) {
+               buff.Set(i, data[i]);
             }
-        }*/
-
+        }
 };
