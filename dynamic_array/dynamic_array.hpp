@@ -36,7 +36,7 @@ template <typename T> class DynamicArray {
             if (data == nullptr) {
                 throw FailedAllocationError("memory allocation for dynamic array failed");
             }
-            for (size_t i = 0, i < size, i++) {
+            for (size_t i = 0; i < size; i++) {
                 new(data + i) T();
             }
             this->size = size;  
@@ -55,7 +55,7 @@ template <typename T> class DynamicArray {
             if (data == nullptr) {
                 throw FailedAllocationError("memory allocation for dynamic array failed");
             }
-            for (int i = 0, i < size, i++) {
+            for (size_t i = 0; i < size; i++) {
                 new(data + i) T(dynamicArray.data[i]);
             }
         };
@@ -86,10 +86,42 @@ template <typename T> class DynamicArray {
             }
             data[index] = value;
         };
-        /*void Resize(size_t new_size) {
+        void Resize(size_t new_size) {
             if (new_size == size) return;
             if (new_size == 0) {
-                
+                if (data != nullptr) {
+                    for (size_t i = 0; i < size; i++) {
+                        data[i].~T();
+                    }
+                    ::operator delete(data);
+                }
+                size = 0;
+                data = nullptr;
+                return;
+
             }
-        };*/
+            if (new_size < size) {
+                if (data != nullptr) {
+                    for (size_t i = new_size; i < size; i++) {
+                        data[i].~T();
+                    }
+                }
+                size = new_size;
+                return;
+            }
+            if (new_size > size) {
+                auto new_data = static_cast<T*>(::operator new(new_size * sizeof(T)));
+                if (new_data == nullptr) {
+                    throw FailedAllocationError("memory allocation for dynamic array failed");
+                }
+                for (size_t i = 0; i < size; i++) {
+                    new(new_data + i) T(data[i]);
+                }
+                for (size_t i = size; i < new_size; i++) {
+                    new(new_data + i) T();
+                }
+                size = new_size;
+                data = new_data;
+            }
+        }
 };
