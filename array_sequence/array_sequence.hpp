@@ -9,8 +9,8 @@ template <typename T> class ArraySequence : public Sequence <T> {
         ArraySequence(const DynamicArray<T>& arr) : buff(arr) {};
     public:
         ArraySequence() : buff() {}
-        ArraySequence(const T* data, int size) : buff(size) {
-            for (int i = 0; i < size; i++) {
+        ArraySequence(const T* data, size_t size) : buff(size) {
+            for (size_t i = 0; i < size; i++) {
                buff.Set(i, data[i]);
             }
         }
