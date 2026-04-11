@@ -40,7 +40,7 @@ template <typename T> class DynamicArray {
          * 
          * @param dynamicArray изначальный массив
          */
-        DynamicArray(DynamicArray<T> & dynamicArray const) : size(dynamicArray.size) {
+        DynamicArray(DynamicArray<T>& dynamicArray const) : size(dynamicArray.size) {
             if (size == 0) {
                 data = nullptr;
                 return;
