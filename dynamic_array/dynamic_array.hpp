@@ -13,12 +13,6 @@ template <typename T> class DynamicArray {
     private:
         T* data;
         size_t size;
-        DynamicArray(size_t size, T* prev) : size(size) {
-            data = static_cast<T*>(::operator new(size * sizeof(T)));
-            for (size_t i = 0; i < size; i++) {
-                new(data + i) T(prev[i]);
-            }
-        }
     public: 
         /**
          * @brief Конструктор пустого массива
