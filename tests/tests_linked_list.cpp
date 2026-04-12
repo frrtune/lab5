@@ -34,8 +34,3 @@ TEST(LinkedListTest, PrependTest) {
     EXPECT_EQ(list.GetFirst(), 12);
     EXPECT_EQ(list.GetLength(), 3);
 }
-
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

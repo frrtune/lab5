@@ -1,7 +1,7 @@
 #pragma once
 
 #include <new>
-#include "exceptions.hpp"
+#include "../exceptions/exceptions.hpp"
 
 /**
  * @brief Узел (ячейка) связного списка
@@ -14,6 +14,7 @@ template <typename T> class Node {
         Node<T>* next;
     public:
         Node(const T& node_data, Node<T>* next = nullptr) : node_data(node_data), next(next) {};
+        template <typename U> friend class LinkedList;
 };
 
 template <typename T> class LinkedList {
@@ -33,7 +34,7 @@ template <typename T> class LinkedList {
             }   
         }
     public:
-        size_t GetLength() {
+        size_t GetLength() const {
             auto current = head;
             size_t size = 0;
             while (current != nullptr) {
@@ -56,7 +57,7 @@ template <typename T> class LinkedList {
         LinkedList(const T* data, size_t list_size) : head(nullptr) {
             if (list_size == 0) {
                 throw InvalidArgumentError("list size must be positive");
-            };
+            }
             head = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
             new(head) Node<T>(data[0]);
             Node<T>* current = head;
@@ -84,13 +85,13 @@ template <typename T> class LinkedList {
         ~LinkedList() {
             delete_nodes(head);
         }
-        T GetFirst() {
+        T GetFirst() const {
             if (head == nullptr) {
                 throw RangeError("list is empty");
             }
             return head->node_data;
         };
-        T GetLast() {
+        T GetLast() const {
             if (head == nullptr) {
                 throw RangeError("list is empty");
             }
@@ -100,7 +101,7 @@ template <typename T> class LinkedList {
            }
            return current->node_data;
         };
-        T Get(size_t index) {
+        T Get(size_t index) const {
             if (head == nullptr) {
                 throw RangeError("list is empty");
             }

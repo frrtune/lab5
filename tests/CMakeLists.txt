@@ -1,0 +1,23 @@
+add_executable(lab5_tests
+    main.cpp
+    tests_array_sequence.cpp
+    tests_bit_sequence.cpp
+    tests_dynamic_array.cpp
+    tests_linked_list.cpp
+    tests_list_sequence.cpp
+)
+target_link_libraries(lab5_tests
+    gtest_main
+    exceptions
+    sequence
+    dynamic_array
+    linked_list
+    array_sequence
+    list_sequence
+    bit_sequence
+)
+target_include_directories(lab5_tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+)
+include(GoogleTest)
+gtest_discover_tests(lab5_tests)

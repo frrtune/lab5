@@ -2,12 +2,12 @@
 #include "../bit_sequence/bit_sequence.hpp"
 
 TEST(BitSequenceTest, ConstructorTest) {
-    BitSequence sequence;
+    BitSequence seq;
     EXPECT_EQ(seq.GetLength(), 0);
 }
 TEST(BitSequenceTest, ArrayConstructorTest) {
     bool items[] = {1, 0, 1};
-    BitSequence sequence(items, 5);
+    BitSequence seq(items, 3);
     EXPECT_EQ(seq.GetLength(), 3);
     EXPECT_EQ(seq.GetBit(0), 1);
     EXPECT_EQ(seq.GetBit(1), 0);
@@ -64,9 +64,4 @@ TEST(BitSequenceTest, XorTest) {
     EXPECT_EQ(result->GetBit(3), 0);
     EXPECT_EQ(result->GetBit(4), 0);
     delete result;
-}
-
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <new>
-#include "exceptions.hpp"
+#include "../exceptions/exceptions.hpp"
 
 
 /**
@@ -35,12 +35,22 @@ template <typename T> class DynamicArray {
             }
             this->size = size;  
         };
+        DynamicArray(const T* items, size_t count) : size(count) {
+            if (count == 0) {
+                data = nullptr;
+                return;
+            }
+            data = static_cast<T*>(::operator new(count * sizeof(T)));
+            for (size_t i = 0; i < count; i++) {
+                new(data + i) T(items[i]);
+            }
+        };
         /**
          * @brief Копирующий конструктор динамического массива 
          * 
          * @param dynamicArray изначальный массив
          */
-        DynamicArray(DynamicArray<T>& dynamicArray const) : size(dynamicArray.size) {
+        DynamicArray(const DynamicArray<T>& dynamicArray) : size(dynamicArray.size) {
             if (size == 0) {
                 data = nullptr;
                 return;

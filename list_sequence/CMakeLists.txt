@@ -1,0 +1,3 @@
+add_library(list_sequence INTERFACE)
+target_include_directories(list_sequence INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(list_sequence INTERFACE sequence linked_list exceptions)

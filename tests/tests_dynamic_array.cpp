@@ -31,8 +31,3 @@ TEST(DynamicArrayTest, GetLengthTest) {
     DynamicArray<int> arr(items, 3);
     EXPECT_EQ(arr.GetLength(), 3);
 }
-
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

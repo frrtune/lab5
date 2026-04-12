@@ -70,6 +70,9 @@ class BitSequence : public Sequence<Bit> {
             }
         }
         BitSequence(const BitSequence& other) : bit_sequence(other.bit_sequence) {}
+        bool GetBit(size_t index) const {
+            return Get(index).GetValue();
+        }
         Bit GetFirst() const override {
             return bit_sequence.GetFirst();
         }

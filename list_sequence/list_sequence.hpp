@@ -13,26 +13,26 @@ template <typename T> class ListSequence : public Sequence <T> {
                buff.Append(items[i]);
             }
         }
-        ListSequence (ListSequence<T>& list const) : buff(list.buff) {};
-        T GetFirst() {
+        ListSequence (const ListSequence<T>& list) : buff(list.buff) {};
+        T GetFirst() const override {
             if (buff.GetLength() == 0) {
                 throw RangeError("buffer is empty");   
             }
             return buff.GetFirst();
         };
-        T GetLast() {
+        T GetLast() const override {
             if (buff.GetLength() == 0) {
                 throw RangeError("buffer is empty");   
             }
             return buff.GetLast();
         };
-        T Get(size_t index) {
+        T Get(size_t index) const override {
             if (index >= buff.GetLength()) {
                 throw RangeError("index is out of range");   
             }
             return buff.Get(index);
         };
-        ListSequence<T>* GetSubsequence(size_t start_index, size_t end_index) {
+        ListSequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
             if (start_index >= buff.GetLength() || end_index >= buff.GetLength()) {
                 throw RangeError("index is out of range");   
             }
@@ -45,15 +45,15 @@ template <typename T> class ListSequence : public Sequence <T> {
             }
             return subsequence;
         };
-        size_t GetLength() {
+        size_t GetLength() const override {
             return buff.GetLength();
         };
-        ListSequence<T>* Append(const T& item) {
+        ListSequence<T>* Append(const T& item) const override {
             ListSequence<T>* new_list = new ListSequence<T>(*this);
             new_list->buff.Append(item);
             return new_list;
         };
-        ListSequence<T>* Prepend(const T& item) {
+        ListSequence<T>* Prepend(const T& item) const override {
             ListSequence<T>* new_list = new ListSequence<T>();
             new_list->buff.Append(item);
             for (size_t i = 0; i < buff.GetLength(); i++) {
@@ -61,7 +61,7 @@ template <typename T> class ListSequence : public Sequence <T> {
             }
             return new_list;
         };
-        ListSequence<T>* InsertAt(const T& item, size_t index) {
+        ListSequence<T>* InsertAt(const T& item, size_t index) const override {
             if (index > buff.GetLength()) {
                 throw RangeError("index is out of range");
             }
@@ -75,13 +75,13 @@ template <typename T> class ListSequence : public Sequence <T> {
             }
             return new_list;
         };
-        ListSequence <T>* Concat(ListSequence<T>* list) {
+        ListSequence <T>* Concat(Sequence<T>* list) const override {
             if (list == nullptr) {
                 throw InvalidArgumentError("argument is nullptr");
             }
             ListSequence<T>* new_list = new ListSequence<T>(*this);
-            for (size_t i = 0; i < list->buff.GetLength(); i++) {
-                new_list->buff.Append(list->buff.Get(i));
+            for (size_t i = 0; i < list->GetLength(); i++) {
+                new_list->buff.Append(list->Get(i));
             }
             return new_list;
         };

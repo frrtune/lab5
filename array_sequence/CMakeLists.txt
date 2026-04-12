@@ -1,0 +1,3 @@
+add_library(array_sequence INTERFACE)
+target_include_directories(array_sequence INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(array_sequence INTERFACE sequence dynamic_array)

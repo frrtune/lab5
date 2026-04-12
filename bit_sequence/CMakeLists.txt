@@ -1,0 +1,3 @@
+add_library(bit_sequence INTERFACE)
+target_include_directories(bit_sequence INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(bit_sequence INTERFACE sequence array_sequence)
