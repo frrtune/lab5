@@ -1,8 +1,6 @@
 #pragma once
 
 #include <utility>
-#include "../exceptions.hpp"
-#include "../sequence/sequence.hpp"
 #include "../array_sequence/array_sequence.hpp"
 
 class Bit {
