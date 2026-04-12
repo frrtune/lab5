@@ -13,7 +13,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
                buff.Set(i, items[i]);
             }
         }
-        ArraySequence (ArraySequence<T>& arr const) : buff(arr.buff) {};
+        ArraySequence (const ArraySequence<T>& arr) : buff(arr.buff) {};
         T GetFirst() const override {
             if (buff.GetLength() == 0) {
                 throw RangeError("buffer is empty");   

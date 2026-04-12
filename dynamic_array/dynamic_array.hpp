@@ -59,19 +59,19 @@ template <typename T> class DynamicArray {
          */
         ~DynamicArray() {
             if (data != nullptr) {
-                for (size_t i = 0, i < size, i++) {
+                for (size_t i = 0; i < size; i++) {
                     data[i].~T();
                 }
                 ::operator delete(data);
             }
         }
-        T Get(size_t index) {
+        T Get(size_t index) const {
             if (index >= size) {
                 throw RangeError("index is out of range");
             }
             return data[index];
         }; 
-        int GetSize() {
+        size_t GetLength() const {
             return size;
         };
         void Set(size_t index, const T& value) {
