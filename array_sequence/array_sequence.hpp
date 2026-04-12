@@ -59,8 +59,37 @@ template <typename T> class ArraySequence : public Sequence <T> {
             DynamicArray<T> new_buff;
             new_buff.Resize(buff.GetSize() + 1);
             new_buff.Set(0, item);
-            for (size_t i = 1; i < new_buff.GetSize() ; i++) {
+            for (size_t i = 1; i < new_buff.GetSize(); i++) {
                 new_buff.Set(i, buff.Get(i - 1));
+            }
+            return new ArraySequence<T>(new_buff);
+        };
+        ArraySequence<T>* InsertAt(const T& item, size_t index) {
+            if (index > buff.GetSize()) {
+                throw RangeError("index is out of range");
+            }
+            DynamicArray<T> new_buff;
+            new_buff.Resize(buff.GetSize() + 1);
+            for (size_t i = 0; i < index; i++) {
+                new_buff.Set(i, buff.Get(i));
+            }
+            new_buff.Set(index, item);
+            for (size_t i = index + 1; i < new_buff.GetSize(); i++) {
+                new_buff.Set(i, buff.Get(i - 1));
+            }
+            return new ArraySequence<T>(new_buff);
+        };
+        ArraySequence <T>* Concat(ArraySequence<T>* arr) {
+            if (arr == nullptr) {
+                throw InvalidArgumentError("argument is nullptr");
+            }
+            DynamicArray<T> new_buff;
+            new_buff.Resize(buff.GetSize() + arr->buff.GetSize());
+            for (size_t i = 0; i < buff.GetSize(); i++) {
+                new_buff.Set(i, buff.Get(i));
+            }
+            for (size_t i = 0; i < arr->buff.GetSize(); i++) {
+                new_buff.Set(i + buff.GetSize(), arr->buff.Get(i));
             }
             return new ArraySequence<T>(new_buff);
         };
