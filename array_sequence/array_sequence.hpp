@@ -6,6 +6,7 @@
 template <typename T> class ArraySequence : public Sequence <T> {
     private:
         DynamicArray<T> buff;
+        ArraySequence(const DynamicArray<T>& arr) : buff(arr) {}
     public:
         ArraySequence() : buff() {}
         ArraySequence(const T* items, size_t count) : buff(count) {
