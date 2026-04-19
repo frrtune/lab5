@@ -58,8 +58,7 @@ template <typename T> class LinkedList {
             if (list_size == 0) {
                 throw InvalidArgumentError("list size must be positive");
             }
-            head = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
-            new(head) Node<T>(data[0]);
+            Node<T> *head = new Node<T>(data[0]);
             Node<T>* current = head;
             for (size_t i = 1; i < list_size; i++) {
                 current->next = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
@@ -76,8 +75,7 @@ template <typename T> class LinkedList {
             Node<T>* this_current = head;
             Node<T>* other_current = list.head->next;
             while (other_current != nullptr) {
-                this_current->next = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
-                new(this_current->next) Node<T>(other_current->node_data);
+                Node<T> *this_current->next = new Node<T>(other_current->node_data);
                 this_current = this_current->next;
                 other_current = other_current->next;
             }
@@ -115,8 +113,7 @@ template <typename T> class LinkedList {
            return current->node_data;
         }
         void Append(const T& item) {
-            Node<T>* new_node = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
-            new(new_node) Node<T>(item);
+            Node<T> *new_node = new Node<T>(item);
             if (head == nullptr) {
                 head = new_node;
             } else {
@@ -147,8 +144,7 @@ template <typename T> class LinkedList {
             return sublist;
         };
         void Prepend(const T& item) {
-            Node<T>* new_node = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
-            new(new_node) Node<T>(item);
+            Node<T> *new_node = new Node<T>(item);
             new_node->next = head;
             head = new_node;
         };
@@ -169,8 +165,7 @@ template <typename T> class LinkedList {
             for (size_t i = 0; i < index - 1; i++) {
                 current = current->next;
             }
-            Node<T>* new_node = static_cast<Node<T>*>(::operator new(sizeof(Node<T>)));
-            new(new_node) Node<T>(item);
+            Node<T> *new_node = new Node<T>(item);
             new_node->next = current->next;
             current->next = new_node;
         };
