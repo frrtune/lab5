@@ -75,7 +75,7 @@ template <typename T> class LinkedList {
             Node<T>* this_current = head;
             Node<T>* other_current = list.head->next;
             while (other_current != nullptr) {
-                Node<T> *this_current->next = new Node<T>(other_current->node_data);
+                this_current->next = new Node<T>(other_current->node_data);
                 this_current = this_current->next;
                 other_current = other_current->next;
             }

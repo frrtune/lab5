@@ -228,6 +228,21 @@ BitSequence* BitSequence::Or(const BitSequence& other) const {
     return result;
 }
 
+BitSequence* BitSequence::Xor(const BitSequence& other) const {
+    size_t new_size = 0;
+    if (size < other.size) {
+        new_size = size;
+    } else {
+        new_size = other.size;
+    }
+    BitSequence* result = new BitSequence();
+    
+    for (size_t i = 0; i < new_size; i++) {
+        result->append_bit(get_bit_value(i) != other.get_bit_value(i));
+    }
+    return result;
+}
+
 BitSequence* BitSequence::Not() const {
     BitSequence* result = new BitSequence();
     for (size_t i = 0; i < size; i++) {
