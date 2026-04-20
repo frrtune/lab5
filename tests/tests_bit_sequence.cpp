@@ -1,6 +1,48 @@
 #include <gtest/gtest.h>
 #include "../bit_sequence/bit_sequence.hpp"
 
+TEST(BitSequenceTest, GetBitExceptionTest) {
+    bool items[] = {1, 0, 1};
+    BitSequence seq(items, 3);
+    EXPECT_THROW(seq.GetBit(3), RangeError);
+}
+
+TEST(BitSequenceTest, GetFirstExceptionTest) {
+    bool items[] = {};
+    BitSequence seq(items, 0);
+    EXPECT_THROW(seq.GetFirst(), RangeError);
+}
+
+TEST(BitSequenceTest, GetLastExceptionTest) {
+    bool items[] = {};
+    BitSequence seq(items, 0);
+    EXPECT_THROW(seq.GetBit(0), RangeError);
+}
+
+TEST(BitSequenceTest, GetExceptionTest) {
+    bool items[] = {1, 0, 1};
+    BitSequence seq(items, 3);
+    EXPECT_THROW(seq.GetBit(3), RangeError);
+}
+
+TEST(BitSequenceTest, GetSubsequenceExceptionTest) {
+    bool items[] = {1, 0, 1, 0, 1};
+    BitSequence seq(items, 5);
+    EXPECT_THROW(seq.GetSubsequence(4, 1), InvalidArgumentError);
+}
+
+TEST(BitSequenceTest, InsertAtExceptionTest) {
+    bool items[] = {1, 0, 1};
+    BitSequence seq(items, 3);
+    EXPECT_THROW(seq.InsertAt(0, 50), RangeError);
+}
+
+TEST(BitSequenceTest, ConcatExceptionTest) {
+    bool items[] = {1, 0, 1};
+    BitSequence seq(items, 3);
+    EXPECT_THROW(seq.Concat(nullptr), InvalidArgumentError);
+}
+
 TEST(BitSequenceTest, ConstructorTest) {
     BitSequence seq;
     EXPECT_EQ(seq.GetLength(), 0);
