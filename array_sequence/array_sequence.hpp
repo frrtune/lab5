@@ -6,10 +6,22 @@
 template <typename T> class ArraySequence : public Sequence <T> {
     private:
         DynamicArray<T> buff;
-        ArraySequence(const DynamicArray<T>& arr) : buff(arr) {}
+        size_t capacity;
+        ArraySequence(const DynamicArray<T>& arr, size_t param_capacity) : buff(arr), capacity(param_capacity) {}
+        size_t calculate_capacity(size_t current_capacity, size_t current_size) {
+            if (current_capacity >= current_size) return current_capacity;
+            size_t new_capacity = 1;
+            if (current_capacity != 0) {
+                new_capacity = current_capacity;
+            }
+            while (new_capacity < current_size) {
+                new_capacity *= 2;
+            }
+            return new_capacity;
+        }
     public:
-        ArraySequence() : buff() {}
-        ArraySequence(const T* items, size_t count) : buff(count) {
+        ArraySequence() : buff(), capacity(0) {}
+        ArraySequence(const T* items, size_t count) : buff(count), capacity(count){
             for (size_t i = 0; i < count; i++) {
                buff.Set(i, items[i]);
             }
