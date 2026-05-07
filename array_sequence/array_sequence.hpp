@@ -29,32 +29,32 @@ template <typename T> class ArraySequence : public Sequence <T> {
 
     public:
         ArraySequence() : buff(), size(0) {}
-        ArraySequence(const T* items, size_t count) : buff(count), capacity(count){
+        ArraySequence(const T* items, size_t count) : buff(count), size(count){
             for (size_t i = 0; i < count; i++) {
                buff.Set(i, items[i]);
             }
         }
-        ArraySequence (const ArraySequence<T>& arr) : buff(arr.buff) {};
+        ArraySequence (const ArraySequence<T>& arr) : buff(arr.buff), size(arr.size) {};
         T GetFirst() const override {
-            if (buff.GetLength() == 0) {
+            if (size == 0) {
                 throw RangeError("buffer is empty");   
             }
             return buff.Get(0);
         };
         T GetLast() const override {
-            if (buff.GetLength() == 0) {
+            if (size == 0) {
                 throw RangeError("buffer is empty");   
             }
-            return buff.Get(buff.GetLength() - 1);
+            return buff.Get(size - 1);
         };
         T Get(size_t index) const override {
-            if (index >= buff.GetLength()) {
+            if (index >= size) {
                 throw RangeError("index is out of range");   
             }
             return buff.Get(index);
         };
         ArraySequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
-            if (start_index >= buff.GetLength() || end_index >= buff.GetLength()) {
+            if (start_index >= size || end_index >= size) {
                 throw RangeError("index is out of range");   
             }
             if (start_index > end_index) {
@@ -68,7 +68,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
             return new ArraySequence<T>(new_buff, new_size);
         };
         size_t GetLength() const override {
-            return buff.GetLength();
+            return size;
         };
         ArraySequence<T>* Append(const T& item) const override {
             size_t new_size = size + 1;
@@ -79,14 +79,14 @@ template <typename T> class ArraySequence : public Sequence <T> {
         ArraySequence<T>* Prepend(const T& item) const override {
             size_t new_size = size + 1;
             DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
-            for (size_t i = new_size; i > 1; i--) {
-                new_buff[i] = new_buff[i - 1];
+            for (size_t i = size; i > 0; i--) {
+                new_buff.Set(i, buff.Get(i - 1));
             }
             new_buff.Set(0, item);
             return new ArraySequence<T>(new_buff, new_size);
         };
         ArraySequence<T>* InsertAt(const T& item, size_t index) const override {
-            if (index > buff.GetLength()) {
+            if (index > size) {
                 throw RangeError("index is out of range");
             }
             size_t new_size = size + 1;
