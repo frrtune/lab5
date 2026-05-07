@@ -65,16 +65,17 @@ template <typename T> class ArraySequence : public Sequence <T> {
             for (size_t i = start_index; i <= end_index; i++) {
                 new_buff.Set(i - start_index, buff.Get(i));
             }
-            return new ArraySequence<T>(new_buff);
+            return new ArraySequence<T>(new_buff, new_size);
         };
         size_t GetLength() const override {
             return buff.GetLength();
         };
         ArraySequence<T>* Append(const T& item) const override {
-            DynamicArray<T> new_buff(buff);
-            new_buff.Resize(buff.GetLength() + 1);
-            new_buff.Set(buff.GetLength(), item);
-            return new ArraySequence<T>(new_buff);
+            size_t index = buff.GetLength();
+            size_t new_size = buff.GetLength() + 1;
+            DynamicArray<T> new_buff = make_buff(buff, capacity, new_size);
+            new_buff.Set(index, item);
+            return new ArraySequence<T>(new_buff, new_buff.GetLength());
         };
         ArraySequence<T>* Prepend(const T& item) const override {
             DynamicArray<T> new_buff;
