@@ -101,14 +101,12 @@ template <typename T> class ArraySequence : public Sequence <T> {
             if (list == nullptr) {
                 throw InvalidArgumentError("argument is nullptr");
             }
-            DynamicArray<T> new_buff;
-            new_buff.Resize(buff.GetLength() + list->GetLength());
-            for (size_t i = 0; i < buff.GetLength(); i++) {
-                new_buff.Set(i, buff.Get(i));
+            size_t old_length = list->GetLength();
+            size_t new_size = size + old_length;
+            DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
+            for (size_t i = 0; i < old_length; i++) {
+                new_buff.Set(i + size, list->Get(i));
             }
-            for (size_t i = 0; i < list->GetLength(); i++) {
-                new_buff.Set(i + buff.GetLength(), list->Get(i));
-            }
-            return new ArraySequence<T>(new_buff);
+            return new ArraySequence<T>(new_buff, new_size);
         };
 };
