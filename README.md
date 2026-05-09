@@ -8,3 +8,5 @@ docs - изменение/добавление документации
 fix - исправление ошибок
 chore - вспомогательные изменения, не влияющие на код и документация
 refactor - правки кода без исправления ошибок
+
+[![C++ Tests](https://github.com/frrtune/lab5/actions/workflows/TESTS.yml/badge.svg)](https://github.com/frrtune/lab5/actions/workflows/TESTS.yml)
