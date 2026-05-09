@@ -5,8 +5,7 @@ add_executable(lab5_ui
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
 
-find_library(PDCURSES_LIB NAMES pdcurses libpdcurses PATHS "C:/msys64/mingw64/lib")
-find_path(PDCURSES_INCLUDE NAMES curses.h pdcurses.h PATHS "C:/msys64/mingw64/include" "C:/msys64/mingw64/include/pdcurses")
+find_package(Curses REQUIRED)
 
 target_link_libraries(lab5_ui
     ${PDCURSES_LIB}
