@@ -1,0 +1,25 @@
+name: TEST
+on: [push]
+jobs:
+  check-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake build-essential libpdcurses-dev
+    - name: Configure CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Debug
+    - name: Build 
+      run: |
+        cd build
+        cmake --build .
+    - name: Run tests
+      run: |
+        cd build
+        ctest --output-on-failure
