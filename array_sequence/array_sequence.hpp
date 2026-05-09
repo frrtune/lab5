@@ -8,7 +8,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
         DynamicArray<T> buff;
         size_t size;
         ArraySequence(const DynamicArray<T>& arr, size_t param_size) : buff(arr), size(param_size) {}
-        size_t calculate_capacity(size_t current_capacity, size_t new_size) {
+        size_t calculate_capacity(size_t current_capacity, size_t new_size) const {
             if (current_capacity >= new_size) return current_capacity;
             size_t new_capacity = 1;
             if (current_capacity != 0) {
