@@ -19,7 +19,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
             }
             return new_capacity;
         }
-        DynamicArray<T> make_buff(const DynamicArray<T>& arr, size_t current_capacity, size_t new_size) {
+        DynamicArray<T> make_buff(const DynamicArray<T>& arr, size_t current_capacity, size_t new_size) const {
             if (current_capacity >= new_size) return arr;
             size_t new_capacity = calculate_capacity(current_capacity, new_size);
             DynamicArray<T> new_buff{arr};
