@@ -3,5 +3,5 @@
 
 TEST(SegmentedDequeTest, ConstructorTest) {
     SegmentedDeque<int> seg_deque;
-    EXPECT_EQ(sequence.GetLength(), 0);
+    EXPECT_EQ(seg_deque.GetLength(), 0);
 }
