@@ -4,6 +4,16 @@ template <typename T>
 SegmentedDeque<T>::SegmentedDeque() : head(nullptr), tail(nullptr), total_size(0) {};
 
 template <typename T>
+SegmentedDeque<T>::~SegmentedDeque() {
+    Batch* current = head;
+    while (current != nullptr) {
+        Batch* next = current->next;
+        delete_batch(current);
+        current = next;
+    }
+};
+
+template <typename T>
 SegmentedDeque<T>::SegmentedDeque(const SegmentedDeque<T>& other) : head(nullptr), tail(nullptr), total_size(0) {
     Batch* current = other.head;
     while (current != nullptr) {
@@ -55,17 +65,6 @@ T SegmentedDeque<T>::Get(size_t index) const {
 }
 
 template <typename T>
-SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t endIndex) const {
-    if (startIndex > endIndex) throw InvalidArgumentError("start index must be less thasn end index");
-    if (startIndex >= total_size || endIndex >= total_size) throw RangeError("index is out of range");
-    SegmentedDeque<T>* result = new SegmentedDeque<T>();
-    for (size_t i = startIndex; i <= endIndex, i++) {
-        result->Append(Get(i));
-    }
-    return result;
-}
-
-template <typename T>
 SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {
     SegmentedDeque<T>* result = new SegmentedDeque<T>(*this);
     if (result->head == nullptr) {
@@ -86,3 +85,17 @@ SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {
     result->total_size = total_size + 1;
     return result;
 }
+
+/*template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t endIndex) const {
+    if (startIndex > endIndex) throw InvalidArgumentError("start index must be less thasn end index");
+    if (startIndex >= total_size || endIndex >= total_size) throw RangeError("index is out of range");
+    SegmentedDeque<T>* result = new SegmentedDeque<T>();
+    for (size_t i = startIndex; i <= endIndex; i++) {
+        SegmentedDeque<T>* temporary = new SegmentedDeque<T>();
+        temporary = result->Append(Get(i));
+        delete result;
+        SegmentedDeque<T>* result = new SegmentedDeque<T>(*temporary);
+    }
+    return result;
+}*/
