@@ -4,6 +4,30 @@ template <typename T>
 SegmentedDeque<T>::SegmentedDeque() : head(nullptr), tail(nullptr), total_size(0) {};
 
 template <typename T>
+SegmentedDeque<T>::SegmentedDeque(const SegmentedDeque<T>& other) : head(nullptr), tail(nullptr), total_size(0) {
+    Batch* current = other.head;
+    while (current != nullptr) {
+        Batch* new_batch = new Batch();
+        new_batch->first_elem = current->first_elem;
+        new_batch->elem_count = current->elem_count;
+        for (size_t i = 0; i < current->elem_count; i++) {
+            size_t index = current->first_elem + i;
+            new(new_batch->data + index) T(current->data[index]);
+        }
+        if (head == nullptr) {
+            head = new_batch;
+            tail = new_batch;
+        } else {
+            tail->next = new_batch;
+            new_batch->prev = tail;
+            tail = new_batch;
+        }
+        current = current->next;
+    }
+    total_size = other.total_size;
+};
+
+template <typename T>
 T SegmentedDeque<T>::GetFirst() const {
     if (total_size == 0) throw RangeError("SegmentedDeque is empty");
     return head->data[head->first_elem];
@@ -29,3 +53,17 @@ T SegmentedDeque<T>::Get(size_t index) const {
     }
     throw Error("some error occured");
 }
+
+/*template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t endIndex) const {
+    if (startIndex > endIndex) throw InvalidArgumentError("start index must be less thasn end index");
+    if (startIndex >= total_size || endIndex >= total_size) throw RangeError("index is out of range");
+    SegmentedDeque<T>* result = new SegmentedDeque<T>();
+    for (size_t i = startIndex; i <= endIndex, i++) {
+        result->Append(Get(i));
+    }
+    return result;
+}
+
+template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {}*/
