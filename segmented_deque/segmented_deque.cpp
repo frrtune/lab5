@@ -54,7 +54,7 @@ T SegmentedDeque<T>::Get(size_t index) const {
     throw Error("some error occured");
 }
 
-/*template <typename T>
+template <typename T>
 SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t endIndex) const {
     if (startIndex > endIndex) throw InvalidArgumentError("start index must be less thasn end index");
     if (startIndex >= total_size || endIndex >= total_size) throw RangeError("index is out of range");
@@ -66,4 +66,23 @@ SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t e
 }
 
 template <typename T>
-SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {}*/
+SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {
+    SegmentedDeque<T>* result = new SegmentedDeque<T>(*this);
+    if (result->head == nullptr) {
+        result->head = result->init_batch();
+        result->tail = result->head;
+    }
+    if (result->tail->elem_count < batch_size) {
+        new(result->tail->data + result->tail->elem_count) T(item);
+        result->tail->elem_count++;
+    } else {
+        Batch* new_batch = result->init_batch();
+        new_batch->prev = result->tail;
+        result->tail->next = new_batch;
+        result->tail = new_batch;
+        new(result->tail->data) T(item);
+        result->tail->elem_count = 1;
+    }
+    result->total_size = total_size + 1;
+    return result;
+}
