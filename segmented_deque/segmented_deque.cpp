@@ -22,9 +22,10 @@ T SegmentedDeque<T>::Get(size_t index) const {
     Batch* current = head;
     while (current != nullptr) {
         if (index < current->elem_count) {
-            return current->data[current->first_elem + index]
+            return current->data[current->first_elem + index];
         }
         index -= current->elem_count;
         current = current->next;
     }
+    throw Error("some error occured");
 }

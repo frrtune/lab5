@@ -7,22 +7,27 @@ class SegmentedDeque : public Sequence <T> {
         static const size_t batch_size = 16;
         struct Batch {
             T data[batch_size];
-            size_t batch_number = 0;
+            size_t first_elem = 0;
             size_t elem_count = 0;
             Batch* next = nullptr;
             Batch* prev = nullptr;
-        }
+        };
+        size_t total_size = 0;
         Batch* head = nullptr;
         Batch* tail = nullptr;
         Batch* init_batch() {
             return new Batch();
         };
         void delete_batch(Batch* batch) {
-            for(size_t i = 0; i < batch.elem_count; i++) {
+            for(size_t i = 0; i < batch->elem_count; i++) {
                 batch->data[i].~T();
             }
             delete batch;
         };
     public:
         SegmentedDeque();
+        T GetFirst() const override;
+        T GetLast() const override;
+        T Get(size_t index) const override;
+        SegmentedDeque<T>* GetSubsequence(size_t startIndex, size_t endIndex) const override;
 };
