@@ -86,16 +86,16 @@ SegmentedDeque<T>* SegmentedDeque<T>::Append(const T& item) const {
     return result;
 }
 
-/*template <typename T>
+template <typename T>
 SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t endIndex) const {
     if (startIndex > endIndex) throw InvalidArgumentError("start index must be less thasn end index");
     if (startIndex >= total_size || endIndex >= total_size) throw RangeError("index is out of range");
     SegmentedDeque<T>* result = new SegmentedDeque<T>();
     for (size_t i = startIndex; i <= endIndex; i++) {
-        SegmentedDeque<T>* temporary = new SegmentedDeque<T>();
-        temporary = result->Append(Get(i));
+        SegmentedDeque<T>* temporary = result->Append(Get(i));
         delete result;
-        SegmentedDeque<T>* result = new SegmentedDeque<T>(*temporary);
+        result = new SegmentedDeque<T>(*temporary);
+        delete temporary;
     }
     return result;
-}*/
+}
