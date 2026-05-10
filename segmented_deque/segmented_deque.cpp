@@ -128,3 +128,26 @@ SegmentedDeque<T>* SegmentedDeque<T>::Prepend(const T& item) const {
     result->total_size = total_size + 1;
     return result;
 }
+
+template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::Concat(Sequence <T> *list) const {
+    if (list == nullptr) throw InvalidArgumentError("argument is nullptr");
+    SegmentedDeque<T>* result = new SegmentedDeque<T>(*this);
+    for (size_t i = 0; i < list->GetLength(); i++) {
+        SegmentedDeque<T>* temporary = result->Append(list->Get(i));
+        delete result;
+        result = new SegmentedDeque<T>(*temporary);
+        delete temporary;
+    }
+    return result;
+}
+
+/*template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::InsertAt(const T& item, size_t index) const {
+    if (total_size == 0) throw RangeError("SegmentedDeque is empty");
+    if (index > total_size) throw InvalidArgumentError("index must be less than total size");
+    SegmentedDeque<T>* left = GetSubsequence(0, index - 1);
+    SegmentedDeque<T>* right = GetSubsequence(index, total_size - 1);
+    SegmentedDeque<T>* result = left->Append(item);
+
+}*/
