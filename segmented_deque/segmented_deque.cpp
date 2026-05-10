@@ -142,12 +142,17 @@ SegmentedDeque<T>* SegmentedDeque<T>::Concat(Sequence <T> *list) const {
     return result;
 }
 
-/*template <typename T>
+template <typename T>
 SegmentedDeque<T>* SegmentedDeque<T>::InsertAt(const T& item, size_t index) const {
-    if (total_size == 0) throw RangeError("SegmentedDeque is empty");
-    if (index > total_size) throw InvalidArgumentError("index must be less than total size");
-    SegmentedDeque<T>* left = GetSubsequence(0, index - 1);
-    SegmentedDeque<T>* right = GetSubsequence(index, total_size - 1);
-    SegmentedDeque<T>* result = left->Append(item);
-
-}*/
+    if (index > total_size) throw InvalidArgumentError("index must be less or equal to total size");
+    if (index == 0) return Prepend(item);
+    if (index == total_size) return Append(item);
+    Sequence<T>* left = GetSubsequence(0, index - 1);
+    Sequence<T>* right = GetSubsequence(index, total_size - 1);
+    Sequence<T>* temporary = left->Append(item);
+    SegmentedDeque<T>* result = temporary->Concat(right);
+    delete left;
+    delete right;
+    delete temporary;
+    return result;
+}
