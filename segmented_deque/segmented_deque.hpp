@@ -35,4 +35,8 @@ class SegmentedDeque : public Sequence <T> {
         size_t GetLength() const override;
         SegmentedDeque<T>* Append(const T& item) const override;
         SegmentedDeque<T>* Prepend(const T& item) const override;
+        SegmentedDeque<T>* Concat(Sequence <T> *list) const override;
+        SegmentedDeque<T>* InsertAt(const T& item, size_t index) const override;
+        template <typename F> 
+        SegmentedDeque<F>* Map(F (*func)(const T&)) const;
 };

@@ -156,3 +156,17 @@ SegmentedDeque<T>* SegmentedDeque<T>::InsertAt(const T& item, size_t index) cons
     delete temporary;
     return result;
 }
+
+template <typename T>
+template <typename F>
+SegmentedDeque<F>* SegmentedDeque<T>::Map(F (*func)(const T&)) const {
+    if (func == nullptr) throw InvalidArgumentError("argument is nullptr");
+    SegmentedDeque<F>* result = new SegmentedDeque<F>();
+    for (size_t i = 0; i < total_size; i++) {
+        SegmentedDeque<F>* temporary = result->Append(func(Get(i)));
+        delete result;
+        result = new SegmentedDeque<F>(*temporary);
+        delete temporary;
+    }
+    return result;
+}
