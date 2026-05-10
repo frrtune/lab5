@@ -188,9 +188,9 @@ SegmentedDeque<T>* SegmentedDeque<T>::Where(bool (*func)(const T&)) const {
     for (size_t i = 0; i < total_size; i++) {
         if (func(Get(i))) {
             SegmentedDeque<T>* temporary = result->Append(Get(i));
-        delete result;
-        result = new SegmentedDeque<T>(*temporary);
-        delete temporary; 
+            delete result;
+            result = new SegmentedDeque<T>(*temporary);
+            delete temporary; 
         }
     }
     return result;
