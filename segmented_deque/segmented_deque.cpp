@@ -99,3 +99,32 @@ SegmentedDeque<T>* SegmentedDeque<T>::GetSubsequence(size_t startIndex, size_t e
     }
     return result;
 }
+
+template <typename T>
+size_t SegmentedDeque<T>::GetLength() const {
+    return total_size;
+}
+
+template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::Prepend(const T& item) const {
+    SegmentedDeque<T>* result = new SegmentedDeque<T>(*this);
+    if (result->head == nullptr) {
+        result->head = result->init_batch();
+        result->tail = result->head;
+    }
+    if (result->head->first_elem > 0) {
+        result->head->first_elem--;
+        new(result->head->data + result->head->first_elem) T(item);
+        result->head->elem_count++;
+    } else {
+        Batch* new_batch = result->init_batch();
+        new_batch->next = result->head;
+        result->head->prev = new_batch;
+        result->head = new_batch;
+        result->head->first_elem = batch_size - 1;
+        new(result->head->data + result->head->first_elem) T(item);
+        result->head->elem_count = 1;
+    }
+    result->total_size = total_size + 1;
+    return result;
+}

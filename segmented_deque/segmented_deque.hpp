@@ -26,8 +26,13 @@ class SegmentedDeque : public Sequence <T> {
         };
     public:
         SegmentedDeque();
+        SegmentedDeque(const SegmentedDeque<T>& other);
+        ~SegmentedDeque();
         T GetFirst() const override;
         T GetLast() const override;
         T Get(size_t index) const override;
         SegmentedDeque<T>* GetSubsequence(size_t startIndex, size_t endIndex) const override;
+        size_t GetLength() const override;
+        SegmentedDeque<T>* Append(const T& item) const override;
+        SegmentedDeque<T>* Prepend(const T& item) const override;
 };
