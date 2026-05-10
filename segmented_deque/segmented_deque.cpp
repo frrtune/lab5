@@ -170,3 +170,13 @@ SegmentedDeque<F>* SegmentedDeque<T>::Map(F (*func)(const T&)) const {
     }
     return result;
 }
+
+template <typename T>
+T SegmentedDeque<T>::Reduce(T (*func)(const T& x1, const T& x2), const T& c) const {
+    if (func == nullptr) throw InvalidArgumentError("argument is nullptr");
+    T result = c;
+    for (size_t i = 0; i < total_size; i++) {
+        result = func(result, Get(i));
+    }
+    return result;
+}
