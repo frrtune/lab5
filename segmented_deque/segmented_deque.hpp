@@ -41,4 +41,5 @@ class SegmentedDeque : public Sequence <T> {
         template <typename F> 
         SegmentedDeque<F>* Map(F (*func)(const T&)) const;
         T Reduce(T (*func)(const T& x1, const T& x2), const T& c) const;
+        SegmentedDeque<T>* Where(bool (*func)(const T&)) const;
 };

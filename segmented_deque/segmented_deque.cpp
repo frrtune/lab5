@@ -180,3 +180,18 @@ T SegmentedDeque<T>::Reduce(T (*func)(const T& x1, const T& x2), const T& c) con
     }
     return result;
 }
+
+template <typename T>
+SegmentedDeque<T>* SegmentedDeque<T>::Where(bool (*func)(const T&)) const {
+    if (func == nullptr) throw InvalidArgumentError("argument is nullptr");
+    SegmentedDeque<T>* result = new SegmentedDeque<T>();
+    for (size_t i = 0; i < total_size; i++) {
+        if (func(Get(i))) {
+            SegmentedDeque<T>* temporary = result->Append(Get(i));
+        delete result;
+        result = new SegmentedDeque<T>(*temporary);
+        delete temporary; 
+        }
+    }
+    return result;
+}
