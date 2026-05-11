@@ -2,41 +2,34 @@
 
 #include <exception>
 #include <expected>
+#include <string>
 
 class Error : public std::exception {
+    private:
+        std::string msg_;
     public:
-        const char* what() const noexcept { return "error"; }
+        Error(const std::string& msg) : msg_(msg) {}
+        const char* what() const noexcept override { 
+            return msg_.c_str(); 
+    }
 };
 
 class RangeError : public Error {
-    private:
-        const char* msg;
     public:
-        RangeError(const char* s) : msg(s) {}
-        const char *what() const noexcept {
-            return msg;
-  }
-};
-
-class ZeroError : public Error {
-    public:
-        const char *what() const noexcept { return "Zero error"; }
-};  
+        RangeError(size_t index, size_t size) : Error("Index " + std::to_string(index) + "out of range [0, " + std::to_string(size - 1) +"]" ) {}
+}; 
 
 class InvalidArgumentError : public Error {
-    private:
-        const char* msg;
     public:
-        InvalidArgumentError(const char* s) : msg(s) {}
-        const char *what() const noexcept {
-            return msg;
-}};
+        InvalidArgumentError(const std::string& invalid_argument) : Error("Invalid argument: " + invalid_argument) {}
+};
 
 class FailedAllocationError : public Error {
-    private:
-        const char* msg;
     public:
-        FailedAllocationError(const char* s) : msg(s) {}
-        const char *what() const noexcept {
-            return msg;
-}};
+        FailedAllocationError(const std::string& details) : Error("Allocation failed: " + details) {}
+};
+
+class EmptyBufferError : public Error {
+    public:
+        EmptyBufferError(const std::string& details) : Error("Buffer is empty") {}
+};
