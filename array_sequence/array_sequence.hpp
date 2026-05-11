@@ -37,25 +37,28 @@ template <typename T> class ArraySequence : public Sequence <T> {
         ArraySequence (const ArraySequence<T>& arr) : buff(arr.buff), size(arr.size) {};
         T GetFirst() const override {
             if (size == 0) {
-                throw RangeError("buffer is empty");   
+                throw EmptyBufferError("buffer is empty");   
             }
             return buff.Get(0);
         };
         T GetLast() const override {
             if (size == 0) {
-                throw RangeError("buffer is empty");   
+                throw EmptyBufferError("buffer is empty");   
             }
             return buff.Get(size - 1);
         };
         T Get(size_t index) const override {
             if (index >= size) {
-                throw RangeError("index is out of range");   
+                throw RangeError(index, size);   
             }
             return buff.Get(index);
         };
         ArraySequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
-            if (start_index >= size || end_index >= size) {
-                throw RangeError("index is out of range");   
+            if (start_index >= size) {
+                throw RangeError(start_index, size);   
+            }
+            if (end_index >= size) {
+                throw RangeError(end_index, size);
             }
             if (start_index > end_index) {
                 throw InvalidArgumentError("start index must be less than end index");
@@ -87,7 +90,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
         };
         ArraySequence<T>* InsertAt(const T& item, size_t index) const override {
             if (index > size) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, size);
             }
             size_t new_size = size + 1;
             DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
