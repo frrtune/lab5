@@ -85,13 +85,13 @@ template <typename T> class LinkedList {
         }
         T GetFirst() const {
             if (head == nullptr) {
-                throw RangeError("list is empty");
+                throw EmptyBufferError("list is empty");
             }
             return head->node_data;
         };
         T GetLast() const {
             if (head == nullptr) {
-                throw RangeError("list is empty");
+                throw EmptyBufferError("list is empty");
             }
            Node<T>* current = head;
            while (current->next != nullptr) {
@@ -101,10 +101,10 @@ template <typename T> class LinkedList {
         };
         T Get(size_t index) const {
             if (head == nullptr) {
-                throw RangeError("list is empty");
+                throw EmptyBufferError("list is empty");
             }
            if (index >= GetLength()) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, GetLength());
             }
            Node<T>* current = head;
            for (size_t i = 0; i < index; i++) {
@@ -126,8 +126,11 @@ template <typename T> class LinkedList {
         };
         LinkedList<T>* GetSubList(size_t start_index, size_t end_index) {
             size_t length = GetLength();
-            if (start_index >= length || end_index >= length) {
-                throw RangeError("index is out of range");
+            if (start_index >= GetLength()) {
+                throw RangeError(start_index, GetLength);
+            }
+            if (end_index >= GetLength()) {
+                throw RangeError(end_index, GetLength);
             }
             if (start_index > end_index) {
                 throw InvalidArgumentError("start index must be less than end index");
@@ -151,7 +154,7 @@ template <typename T> class LinkedList {
         void InsertAt(T item, size_t index) {
             size_t length = GetLength();
             if (index > length) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, GetLength());
             }
             if (index == 0) {
                 Prepend(item);
