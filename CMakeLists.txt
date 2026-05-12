@@ -17,7 +17,7 @@ add_subdirectory(linked_list)
 add_subdirectory(array_sequence)
 add_subdirectory(list_sequence)
 add_subdirectory(bit_sequence)
-add_subdirectory(segmented_deque)
+add_subdirectory(deque)
 
 add_subdirectory(tests)
 add_subdirectory(ui)

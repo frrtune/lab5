@@ -10,7 +10,7 @@ class Sequence {
         virtual Sequence<T>* GetSubsequence(size_t startIndex, size_t endIndex) const = 0; 
         virtual size_t GetLength() const = 0;
         virtual Sequence<T>* Append(const T& item) const = 0; 
-        virtual Sequence<T>*Prepend(const T& item) const = 0; 
-        virtual Sequence<T>*InsertAt(const T& item, size_t index) const = 0; 
+        virtual Sequence<T>* Prepend(const T& item) const = 0; 
+        virtual Sequence<T>* InsertAt(const T& item, size_t index) const = 0; 
         virtual Sequence<T>* Concat(Sequence <T> *list) const = 0;
 };

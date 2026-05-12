@@ -1,3 +1,0 @@
-add_library(segmented_deque INTERFACE)
-target_include_directories(segmented_deque INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(segmented_deque INTERFACE sequence array_sequence)
