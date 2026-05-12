@@ -127,10 +127,10 @@ template <typename T> class LinkedList {
         LinkedList<T>* GetSubList(size_t start_index, size_t end_index) {
             size_t length = GetLength();
             if (start_index >= GetLength()) {
-                throw RangeError(start_index, GetLength);
+                throw RangeError(start_index, GetLength());
             }
             if (end_index >= GetLength()) {
-                throw RangeError(end_index, GetLength);
+                throw RangeError(end_index, GetLength());
             }
             if (start_index > end_index) {
                 throw InvalidArgumentError("start index must be less than end index");
