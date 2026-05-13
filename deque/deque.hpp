@@ -15,4 +15,9 @@ public:
         c = *temporary;
         delete temporary;
     }
+    void push_front(const T& item) {
+        Container<T>* temporary = c.Prepend(item);
+        c = *temporary;
+        delete temporary;
+    }
 };
