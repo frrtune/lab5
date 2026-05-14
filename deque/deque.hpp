@@ -27,4 +27,11 @@ public:
         delete temporary;
         return item;
     }
+    T pop_front() {
+        T item = c.GetFirst();
+        Container<T>* temporary = c.GetSubsequence(1, c.GetLength() - 1);
+        c = *temporary;
+        delete temporary;
+        return item;
+    }
 };
