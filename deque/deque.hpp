@@ -20,4 +20,11 @@ public:
         c = *temporary;
         delete temporary;
     }
+    T pop_back() {
+        T item = c.GetLast();
+        Container<T>* temporary = c.GetSubsequence(0, c.GetLength() - 2);
+        c = *temporary;
+        delete temporary;
+        return item;
+    }
 };
