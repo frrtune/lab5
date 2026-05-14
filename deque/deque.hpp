@@ -21,19 +21,25 @@ public:
         delete temporary;
     }
     T pop_back() {
+        if (c.GetLength() == 0) throw EmptyBufferError("deque is empty");
         T item = c.GetLast();
-        Container<T>* temporary = c.GetSubsequence(0, c.GetLength() - 2);
-        c = *temporary;
-        delete temporary;
+        if (c.GetLength() == 1)  {
+            c = Container<T>();
+        } else {
+            Container<T>* temporary = c.GetSubsequence(0, c.GetLength() - 2);
+            c = *temporary;
+            delete temporary;
+        }
         return item;
     }
     T pop_front() {
+        if (c.GetLength() == 0) throw EmptyBufferError("deque is empty");
         T item = c.GetFirst();
         Container<T>* temporary = c.GetSubsequence(1, c.GetLength() - 1);
         c = *temporary;
         delete temporary;
         return item;
-    }
+    }   
     T front() {
         return c.GetFirst();
     }
