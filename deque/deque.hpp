@@ -34,4 +34,16 @@ public:
         delete temporary;
         return item;
     }
+    T front() {
+        return c.GetFirst();
+    }
+    T back() {
+        return c.GetLast();
+    }
+    bool empty() {
+        return c.GetLength() == 0;
+    }
+    size_t size() {
+        return c.GetLength();
+    }
 };
