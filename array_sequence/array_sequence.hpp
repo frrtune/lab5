@@ -53,7 +53,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
             }
             return buff.Get(index);
         };
-        ArraySequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
+        Sequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
             if (start_index >= size) {
                 throw RangeError(start_index, size);   
             }
@@ -73,13 +73,13 @@ template <typename T> class ArraySequence : public Sequence <T> {
         size_t GetLength() const override {
             return size;
         };
-        ArraySequence<T>* Append(const T& item) const override {
+        Sequence<T>* Append(const T& item) const override {
             size_t new_size = size + 1;
             DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
             new_buff.Set(size, item);
             return new ArraySequence<T>(new_buff, new_size);
         };
-        ArraySequence<T>* Prepend(const T& item) const override {
+        Sequence<T>* Prepend(const T& item) const override {
             size_t new_size = size + 1;
             DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
             for (size_t i = size; i > 0; i--) {
@@ -88,7 +88,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
             new_buff.Set(0, item);
             return new ArraySequence<T>(new_buff, new_size);
         };
-        ArraySequence<T>* InsertAt(const T& item, size_t index) const override {
+        Sequence<T>* InsertAt(const T& item, size_t index) const override {
             if (index > size) {
                 throw RangeError(index, size);
             }
@@ -100,7 +100,7 @@ template <typename T> class ArraySequence : public Sequence <T> {
             new_buff.Set(index, item);
             return new ArraySequence<T>(new_buff, new_size);
         };
-        ArraySequence <T>* Concat(Sequence<T>* list) const override {
+        Sequence<T>* Concat(Sequence<T>* list) const override {
             if (list == nullptr) {
                 throw InvalidArgumentError("argument is nullptr");
             }
