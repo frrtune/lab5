@@ -10,3 +10,11 @@ class NameIndex {
         NameIndex() : word_(""), positions_() {}
         NameIndex(const std::string& word, Deque<ArraySequence, size_t>& positions) : word_(word), positions_(positions) {}
 };
+
+class DequeString {
+    private:
+        Deque<ArraySequence, size_t> words_;
+    public:
+        DequeString() : words_() {}
+        DequeString(Deque<ArraySequence, size_t>& words) : words_(words) {}
+};
