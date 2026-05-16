@@ -6,6 +6,7 @@ class NameIndex {
     private:
         std::string word_;
         Deque<ArraySequence, size_t> positions_;
+        friend class DequeString;
     public:
         NameIndex() : word_(""), positions_() {}
         NameIndex(const std::string& word, Deque<ArraySequence, size_t>& positions) : word_(word), positions_(positions) {}
@@ -25,10 +26,26 @@ class DequeString {
         Deque<ArraySequence, NameIndex> name_indexes;
     public:
         DequeString() : name_indexes() {}
-        void add_word(const std::string& word, size_t position) {
-            name_indexes.push_back(word);
-        }
-        NameIndex get_word() {
+        void push_word(const std::string& word, size_t position) {
+            Deque<ArraySequence, NameIndex> temporary;
+            bool is_found = 0;
+            while (!name_indexes.empty()) {
+                NameIndex current = name_indexes.pop_front();
+                if (current.word_ == word) {
+                    current.positions_.push_back(position);
+                    is_found = 1;
+                }
+                temporary.push_back(current);
+            }
+            if (is_found == 0) {
+                NameIndex new_name_index;
+                new_name_index.word_ = word; 
+                new_name_index.positions_.push_back(position);
+                temporary.push_back(new_name_index);
+            }
+            name_indexes = temporary;
+        } 
+        NameIndex pop_word() {
             NameIndex word = name_indexes.pop_front();
             return word;
         }
