@@ -16,7 +16,7 @@ class NameIndex {
         Deque<ArraySequence, size_t> get_positions() const {
             return positions_;
         }
-        void add_positions(size_t position) {
+        void add_position(size_t position) {
             positions_.push_back(position);
         }
 };
@@ -32,7 +32,7 @@ class DequeString {
             while (!name_indexes.empty()) {
                 NameIndex current = name_indexes.pop_front();
                 if (current.word_ == word) {
-                    current.positions_.push_back(position);
+                    current.add_position(position);
                     is_found = 1;
                 }
                 temporary.push_back(current);
@@ -40,7 +40,7 @@ class DequeString {
             if (is_found == 0) {
                 NameIndex new_name_index;
                 new_name_index.word_ = word; 
-                new_name_index.positions_.push_back(position);
+                new_name_index.add_position(position);
                 temporary.push_back(new_name_index);
             }
             name_indexes = temporary;
