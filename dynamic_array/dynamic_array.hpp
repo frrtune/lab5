@@ -77,7 +77,7 @@ template <typename T> class DynamicArray {
         }
         T Get(size_t index) const {
             if (index >= size) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, size);
             }
             return data[index];
         }; 
@@ -86,7 +86,7 @@ template <typename T> class DynamicArray {
         };
         void Set(size_t index, const T& value) {
             if (index >= size) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, size);
             }
             data[index] = value;
         };

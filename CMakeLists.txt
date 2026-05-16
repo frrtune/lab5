@@ -16,8 +16,5 @@ add_subdirectory(dynamic_array)
 add_subdirectory(linked_list)
 add_subdirectory(array_sequence)
 add_subdirectory(list_sequence)
-add_subdirectory(bit_sequence)
 add_subdirectory(deque)
-
 add_subdirectory(tests)
-add_subdirectory(ui)

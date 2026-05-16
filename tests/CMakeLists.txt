@@ -1,10 +1,10 @@
 add_executable(lab5_tests
     main.cpp
     tests_array_sequence.cpp
-    tests_bit_sequence.cpp
     tests_dynamic_array.cpp
     tests_linked_list.cpp
     tests_list_sequence.cpp
+    dictionary.cpp
 )
 target_link_libraries(lab5_tests
     gtest_main
@@ -14,7 +14,7 @@ target_link_libraries(lab5_tests
     linked_list
     array_sequence
     list_sequence
-    bit_sequence
+    dictionary
 )
 target_include_directories(lab5_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/..

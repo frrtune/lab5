@@ -16,25 +16,28 @@ template <typename T> class ListSequence : public Sequence <T> {
         ListSequence (const ListSequence<T>& list) : buff(list.buff) {};
         T GetFirst() const override {
             if (buff.GetLength() == 0) {
-                throw RangeError("buffer is empty");   
+                throw EmptyBufferError("list is empty");   
             }
             return buff.GetFirst();
         };
         T GetLast() const override {
             if (buff.GetLength() == 0) {
-                throw RangeError("buffer is empty");   
+                throw EmptyBufferError("list is empty");   
             }
             return buff.GetLast();
         };
         T Get(size_t index) const override {
             if (index >= buff.GetLength()) {
-                throw RangeError("index is out of range");   
+                throw RangeError(index, GetLength());   
             }
             return buff.Get(index);
         };
         ListSequence<T>* GetSubsequence(size_t start_index, size_t end_index) const override {
-            if (start_index >= buff.GetLength() || end_index >= buff.GetLength()) {
-                throw RangeError("index is out of range");   
+            if (start_index >= buff.GetLength()) {
+                throw RangeError(start_index, GetLength());   
+            }
+            if (end_index >= buff.GetLength()) {
+                throw RangeError(end_index, GetLength());
             }
             if (start_index > end_index) {
                 throw InvalidArgumentError("start index must be less than end index");
@@ -63,7 +66,7 @@ template <typename T> class ListSequence : public Sequence <T> {
         };
         ListSequence<T>* InsertAt(const T& item, size_t index) const override {
             if (index > buff.GetLength()) {
-                throw RangeError("index is out of range");
+                throw RangeError(index, GetLength());
             }
             ListSequence<T>* new_list = new ListSequence<T>();
             for (size_t i = 0; i < index; i++) {
