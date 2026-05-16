@@ -76,4 +76,11 @@ class Dictionary {
             std::string word = banned_words_.pop_front();
             return word;
         }
+        bool is_banned(const std::string& word) {
+            Deque<ArraySequence, std::string> temporary = banned_words_;
+            while(!temporary.empty()) {
+                if (temporary.pop_front() == word) return 1;
+            }
+            return 0;
+        }
 };
