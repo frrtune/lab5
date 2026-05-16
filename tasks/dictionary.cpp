@@ -72,4 +72,8 @@ class Dictionary {
             }
             banned_words_ = temporary;
         } 
+        std::string pop_word() {
+            std::string word = banned_words_.pop_front();
+            return word;
+        }
 };
