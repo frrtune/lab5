@@ -53,8 +53,23 @@ class DequeString {
 
 class Dictionary {
     private:
-        Deque<ArraySequence, size_t> banned_words_;
+        Deque<ArraySequence, std::string> banned_words_;
     public:
         Dictionary() : banned_words_() {}
-        Dictionary(Deque<ArraySequence, size_t>& words) : banned_words_(words) {}
+        Dictionary(Deque<ArraySequence, std::string>& words) : banned_words_(words) {}
+        void push_word(const std::string& word) {
+            Deque<ArraySequence, std::string> temporary;
+            bool is_found = 0;
+            while (!banned_words_.empty()) {
+                std::string current = banned_words_.pop_front();
+                if (current == word) {
+                    is_found = 1;
+                }   
+                temporary.push_back(current);
+            }
+            if (is_found == 0) {
+                temporary.push_back(word);
+            }
+            banned_words_ = temporary;
+        } 
 };
