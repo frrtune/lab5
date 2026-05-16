@@ -8,5 +8,5 @@ class NameIndex {
         Deque<ArraySequence, size_t> positions_;
     public:
         NameIndex() : word_(""), positions_() {}
-        NameIndex(const std::string& word, ArraySequence<size_t> positions) : word_(word), positions_(positions) {}
+        NameIndex(const std::string& word, Deque<ArraySequence, size_t> positions) : word_(word), positions_(positions) {}
 };  
