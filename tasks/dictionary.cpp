@@ -13,10 +13,16 @@ class NameIndex {
 
 class DequeString {
     private:
-        Deque<ArraySequence, size_t> words_;
+        Deque<ArraySequence, NameIndex> name_indexes;
     public:
-        DequeString() : words_() {}
-        DequeString(Deque<ArraySequence, size_t>& words) : words_(words) {}
+        DequeString() : name_indexes() {}
+        void add_word(NameIndex& word) {
+            name_indexes.push_back(word);
+        }
+        NameIndex get_word() {
+            NameIndex word = name_indexes.pop_front();
+            return word;
+        }
 };
 
 class Dictionary {
