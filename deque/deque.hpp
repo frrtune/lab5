@@ -11,14 +11,10 @@ public:
     Deque(const Deque& other_deque) : c(other_deque.c) {}
     Deque(const Container<T>& other_container) : c(other_container) {}
     void push_back(const T& item) {
-        Container<T>* temporary = c.Append(item);
-        c = *temporary;
-        delete temporary;
+        c = *c.Append(item);
     }
     void push_front(const T& item) {
-        Container<T>* temporary = c.Prepend(item);
-        c = *temporary;
-        delete temporary;
+        c = *c.Prepend(item);
     }
     T pop_back() {
         if (c.GetLength() == 0) throw EmptyBufferError("deque is empty");
@@ -26,18 +22,14 @@ public:
         if (c.GetLength() == 1)  {
             c = Container<T>();
         } else {
-            Container<T>* temporary = c.GetSubsequence(0, c.GetLength() - 2);
-            c = *temporary;
-            delete temporary;
+            c = *c.GetSubsequence(0, c.GetLength() - 2);
         }
         return item;
     }
     T pop_front() {
         if (c.GetLength() == 0) throw EmptyBufferError("deque is empty");
         T item = c.GetFirst();
-        Container<T>* temporary = c.GetSubsequence(1, c.GetLength() - 1);
-        c = *temporary;
-        delete temporary;
+        c = *c.GetSubsequence(1, c.GetLength() - 1);
         return item;
     }   
     T front() {
