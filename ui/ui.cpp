@@ -47,6 +47,26 @@ int open_ui() {
     int list_start_y = tab_y + 1;
     int input_y = rows - 1;
     bool running = 1;
+    //while (running) {
+        erase();
+        if (current_tab == 0) {
+            attron(COLOR_PAIR(1));
+            mvprintw(tab_y, 1, "[ Dictionary ]");
+            attroff(COLOR_PAIR(1));
+            attron(COLOR_PAIR(2));
+            mvprintw(tab_y, 20, "[ Input ]");
+            attroff(COLOR_PAIR(2));
+        } else {
+            attron(COLOR_PAIR(2));
+            mvprintw(tab_y, 2, "[ Dictionary ]");
+            attroff(COLOR_PAIR(2));
+            attron(COLOR_PAIR(1));
+            mvprintw(tab_y, 20, "[ Input ]");
+            attroff(COLOR_PAIR(1));
+        }
+    //}
+    refresh();
+    getch();
     endwin();
     return 0;
 }
