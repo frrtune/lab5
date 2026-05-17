@@ -47,7 +47,7 @@ int open_ui() {
     int list_start_y = tab_y + 1;
     int input_y = rows - 1;
     bool running = 1;
-    //while (running) {
+    while (running) {
         erase();
         if (current_tab == 0) {
             attron(COLOR_PAIR(1));
@@ -64,7 +64,31 @@ int open_ui() {
             mvprintw(tab_y, 20, "[ Input ]");
             attroff(COLOR_PAIR(1));
         }
-    //}
+        int list_height = rows - list_start_y - 1;
+        if (current_tab == 0) {
+            mvprintw(list_start_y - 1, 1, "Banned words:");
+            Deque<ArraySequence, std::string> temporary;
+            while (!dict.empty()) {
+                std::string word = dict.pop_word();
+                temporary.push_back(word);
+            }
+            int y = list_start_y;
+            size_t count = 0;
+            while ((temporary.empty() == 0) && (count < list_height)) {
+                std::string word = temporary.pop_front();
+                attron(COLOR_PAIR(4));
+                mvprintw(y, 1, "%s", word.c_str());
+                attroff(COLOR_PAIR(4));
+                dict.push_word(word);
+                y++;
+                count++;
+            }
+            while (temporary.empty() == 0) {
+                std::string word = temporary.pop_front();
+                dict.push_word(word);
+            }
+        }
+    }
     refresh();
     getch();
     endwin();
