@@ -64,6 +64,9 @@ class Dictionary {
     public:
         Dictionary() : banned_words_() {}
         Dictionary(Deque<ArraySequence, std::string>& words) : banned_words_(words) {}
+        bool empty() const {
+            return banned_words_.empty();
+        }
         void push_word(const std::string& word) {
             Deque<ArraySequence, std::string> temporary;
             bool is_found = 0;

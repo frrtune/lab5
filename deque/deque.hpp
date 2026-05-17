@@ -48,7 +48,7 @@ public:
     T back() {
         return c.GetLast();
     }
-    bool empty() {
+    bool empty() const {
         return c.GetLength() == 0;
     }
     size_t size() {

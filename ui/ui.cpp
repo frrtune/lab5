@@ -1,6 +1,7 @@
 #include <pdcurses.h>
 #include <string>
 #include "../dynamic_array/dynamic_array.hpp"
+#include "../tasks/dictionary.hpp"
 
 DynamicArray<std::string> split_words(const std::string& str) {
     DynamicArray<std::string> words;
