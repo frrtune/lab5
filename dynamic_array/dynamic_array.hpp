@@ -92,40 +92,18 @@ template <typename T> class DynamicArray {
         };
         void Resize(size_t new_size) {
             if (new_size == size) return;
-            if (new_size == 0) {
-                if (data != nullptr) {
-                    for (size_t i = 0; i < size; i++) {
-                        data[i].~T();
-                    }
-                    ::operator delete(data);
-                }
-                size = 0;
-                data = nullptr;
-                return;
-
-            }
+            T* new_data = new T[new_size];
+            size_t min_size = 0;
             if (new_size < size) {
-                if (data != nullptr) {
-                    for (size_t i = new_size; i < size; i++) {
-                        data[i].~T();
-                    }
-                }
-                size = new_size;
-                return;
+                min_size = new_size;
+            } else {
+                min_size = size;
             }
-            if (new_size > size) {
-                auto new_data = static_cast<T*>(::operator new(new_size * sizeof(T)));
-                if (new_data == nullptr) {
-                    throw FailedAllocationError("memory allocation for dynamic array failed");
-                }
-                for (size_t i = 0; i < size; i++) {
-                    new(new_data + i) T(data[i]);
-                }
-                for (size_t i = size; i < new_size; i++) {
-                    new(new_data + i) T();
-                }
-                size = new_size;
-                data = new_data;
+            for (size_t i = 0; i < min_size; i++) {
+                new_data[i] = data[i]; 
             }
-        }
+            delete[] data;
+            data = new_data;
+            size = new_size;
+            }
 };
