@@ -23,3 +23,30 @@ DynamicArray<std::string> split_words(const std::string& str) {
     }
     return words;
 }
+
+int open_ui() {
+    initscr();
+    cbreak;
+    noecho();
+    keypad(stdscr, TRUE);
+    curs_set(1);
+    int rows, cols;
+    getmaxyx(stdscr, rows, cols);
+    start_color();
+    init_pair(1, COLOR_BLACK, COLOR_MAGENTA);
+    init_pair(2, COLOR_WHITE, COLOR_BLACK);
+    init_pair(3, COLOR_BLACK, COLOR_WHITE);
+    init_pair(4, COLOR_RED, COLOR_BLACK);
+    init_pair(5, COLOR_GREEN, COLOR_BLACK);
+    Dictionary dict;
+    DequeString input_words;
+    int current_tab = 0;
+    std::string input_buffer;
+    std::string last_input;
+    int tab_y = 0;
+    int list_start_y = tab_y + 1;
+    int input_y = rows - 1;
+    bool running = 1;
+    endwin();
+    return 0;
+}
