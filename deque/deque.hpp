@@ -35,7 +35,11 @@ public:
     T pop_front() {
         if (c.GetLength() == 0) throw EmptyBufferError("deque is empty");
         T item = c.GetFirst();
-        c = *c.GetSubsequence(1, c.GetLength() - 1);
+        if (c.GetLength() == 1) {
+            c = Container<T>();
+        } else {
+            c = *c.GetSubsequence(1, c.GetLength() - 1);
+        }
         return item;
     }   
     T front() {
