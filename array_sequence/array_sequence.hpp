@@ -35,6 +35,13 @@ template <typename T> class ArraySequence : public Sequence <T> {
             }
         }
         ArraySequence (const ArraySequence<T>& arr) : buff(arr.buff), size(arr.size) {};
+        ArraySequence<T>& operator=(const ArraySequence<T>& arr) {
+            if (this != &arr) {
+                buff = arr.buff;
+                size = arr.size;
+            }
+            return *this;
+        }
         T GetFirst() const override {
             if (size == 0) {
                 throw EmptyBufferError("buffer is empty");   
