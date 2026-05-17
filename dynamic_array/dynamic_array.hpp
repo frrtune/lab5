@@ -24,25 +24,15 @@ template <typename T> class DynamicArray {
          * 
          * @param size размер массива
          */
-        DynamicArray(size_t size) : DynamicArray() {
+        DynamicArray(size_t size) : data(nullptr), size(size) {
             if (size == 0) return;
-            data = static_cast<T*>(::operator new(size * sizeof(T)));
-            if (data == nullptr) {
-                throw FailedAllocationError("memory allocation for dynamic array failed");
-            }
-            for (size_t i = 0; i < size; i++) {
-                new(data + i) T();
-            }
-            this->size = size;  
+            data = new T[size];
         };
-        DynamicArray(const T* items, size_t count) : size(count) {
-            if (count == 0) {
-                data = nullptr;
-                return;
-            }
-            data = static_cast<T*>(::operator new(count * sizeof(T)));
+        DynamicArray(const T* items, size_t count) : data(nullptr), size(count) {
+            if (count == 0) return;
+            data = new T[count];
             for (size_t i = 0; i < count; i++) {
-                new(data + i) T(items[i]);
+                data[i] = items[i];
             }
         };
         /**
@@ -50,17 +40,14 @@ template <typename T> class DynamicArray {
          * 
          * @param dynamicArray изначальный массив
          */
-        DynamicArray(const DynamicArray<T>& dynamicArray) : size(dynamicArray.size) {
+        DynamicArray(const DynamicArray<T>& dynamicArray) : data(nullptr), size(dynamicArray.size) {
             if (size == 0) {
                 data = nullptr;
                 return;
             }
-            data = static_cast<T*>(::operator new(sizeof(T) * size));
-            if (data == nullptr) {
-                throw FailedAllocationError("memory allocation for dynamic array failed");
-            }
+            data = new T[size];
             for (size_t i = 0; i < size; i++) {
-                new(data + i) T(dynamicArray.data[i]);
+                data[i] = dynamicArray.data[i];
             }
         };
         /**
@@ -68,12 +55,7 @@ template <typename T> class DynamicArray {
          * 
          */
         ~DynamicArray() {
-            if (data != nullptr) {
-                for (size_t i = 0; i < size; i++) {
-                    data[i].~T();
-                }
-                ::operator delete(data);
-            }
+            delete[] data;
         }
         T Get(size_t index) const {
             if (index >= size) {
@@ -92,6 +74,12 @@ template <typename T> class DynamicArray {
         };
         void Resize(size_t new_size) {
             if (new_size == size) return;
+            if (new_size == 0) {
+                delete[] data;
+                data = nullptr;
+                size = 0;
+                return;
+            }
             T* new_data = new T[new_size];
             size_t min_size = 0;
             if (new_size < size) {
