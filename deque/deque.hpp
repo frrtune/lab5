@@ -10,6 +10,12 @@ public:
     ~Deque() = default;
     Deque(const Deque& other_deque) : c(other_deque.c) {}
     Deque(const Container<T>& other_container) : c(other_container) {}
+    Deque& operator=(const Deque& other) {
+        if (this != &other) {
+            c = other.c;
+        }
+        return *this;
+    }
     void push_back(const T& item) {
         c = *c.Append(item);
     }
