@@ -9,7 +9,15 @@ class NameIndex {
         friend class DequeString;
     public:
         NameIndex() : word_(""), positions_() {}
+        NameIndex(const std::string& word) : word_(word), positions_() {}
         NameIndex(const std::string& word, Deque<ArraySequence, size_t>& positions) : word_(word), positions_(positions) {}
+        NameIndex& operator=(const NameIndex& other) {
+            if (this != &other) {
+                word_ = other.word_;
+                positions_ = other.positions_;
+            }
+            return *this;
+        }
         std::string get_word() const {
             return word_;
         }
@@ -38,8 +46,7 @@ class DequeString {
                 temporary.push_back(current);
             }
             if (is_found == 0) {
-                NameIndex new_name_index;
-                new_name_index.word_ = word; 
+                NameIndex new_name_index(word);
                 new_name_index.add_position(position);
                 temporary.push_back(new_name_index);
             }
