@@ -19,3 +19,11 @@ TEST(DequeStringTest, PushWordTest) {
     word = words.pop_word();
     EXPECT_EQ(word.get_word(), "astana");
 }
+
+TEST(DictionaryTest, IsBannedTest) {
+    Dictionary dict;
+    dict.push_word("falcons");
+    dict.push_word("monesy");
+    EXPECT_EQ(dict.is_banned("falcons"), 1);
+    EXPECT_EQ(dict.is_banned("monesy"), 1);
+}
