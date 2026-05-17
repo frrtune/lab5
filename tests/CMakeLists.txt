@@ -5,6 +5,7 @@ add_executable(lab5_tests
     tests_linked_list.cpp
     tests_list_sequence.cpp
     tests_dictionary.cpp
+    tests_deque.cpp
 )
 target_link_libraries(lab5_tests
     gtest_main
