@@ -66,7 +66,7 @@ int open_ui() {
         }
         int list_height = rows - list_start_y - 1;
         if (current_tab == 0) {
-            mvprintw(list_start_y - 1, 1, "Banned words:");
+            mvprintw(list_start_y, 1, "Banned words:");
             Deque<ArraySequence, std::string> temporary;
             while (!dict.empty()) {
                 std::string word = dict.pop_word();
@@ -77,7 +77,7 @@ int open_ui() {
             while ((temporary.empty() == 0) && (count < list_height)) {
                 std::string word = temporary.pop_front();
                 attron(COLOR_PAIR(4));
-                mvprintw(y, 1, "%s", word.c_str());
+                mvprintw(y + 1, 1, "%s", word.c_str());
                 attroff(COLOR_PAIR(4));
                 dict.push_word(word);
                 y++;
@@ -116,6 +116,41 @@ int open_ui() {
                 y++;
             }
         }
+        if (current_tab == 0) {
+            mvprintw(input_y, 1, "Add word: ");
+        } else {
+            mvprintw(input_y, 1, "Enter text: ");
+        }
+        attron(COLOR_PAIR(3));
+        mvprintw(input_y, 20, "%s", input_buffer.c_str());
+        attroff(COLOR_PAIR(3));
+        int ch = getch();
+        if (ch == 27) {
+            running = false;
+        }
+        else if (ch == '\t') {
+            current_tab = (current_tab + 1) % 2;
+            input_buffer.clear();
+        }
+        else if (ch == '\n' || ch == '\r') {
+            if (input_buffer.empty() == 0) {
+                if (current_tab == 0) {
+                    dict.push_word(input_buffer);
+                } else {
+                    last_input = input_buffer;
+                }
+                input_buffer.clear();
+            }
+        }
+        else if (ch == 8 || ch == 127) {
+            if (input_buffer.empty() == 0) {
+                input_buffer.pop_back();
+            }
+        }
+        else if (ch >= 32 && ch <= 126) {
+            input_buffer += ch;
+        }
+    }
     endwin();
     return 0;
 }
