@@ -87,10 +87,35 @@ int open_ui() {
                 std::string word = temporary.pop_front();
                 dict.push_word(word);
             }
+        } else {
+            DynamicArray<std::string> all_words = split_words(last_input);
+            int y = list_start_y;
+            for (size_t i = 0; i < all_words.GetLength() && (y < list_start_y + list_height); i++) {
+                std::string word = all_words.Get(i);
+                bool already_shown = 0;
+                for (size_t j = 0; j < i; j++) {
+                    if (all_words.Get(j) == word) {
+                        already_shown = 1;
+                        break;
+                    }
+                }
+                if (already_shown) continue;
+                size_t count = 1;
+                for (size_t j = i + 1; j < all_words.GetLength(); j++) {
+                    if (all_words.Get(j) == word) count++;
+                }
+                if (dict.is_banned(word)) {
+                    attron(COLOR_PAIR(4));
+                    mvprintw(y, 1, "  %s: %zu", word.c_str(), count);
+                    attroff(COLOR_PAIR(4));
+                } else {
+                    attron(COLOR_PAIR(5));
+                    mvprintw(y, 1, "  %s: %zu", word.c_str(), count);
+                    attroff(COLOR_PAIR(5));
+                }
+                y++;
+            }
         }
-    }
-    refresh();
-    getch();
     endwin();
     return 0;
 }
