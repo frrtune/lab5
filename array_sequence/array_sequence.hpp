@@ -119,4 +119,14 @@ template <typename T> class ArraySequence : public Sequence <T> {
             }
             return new ArraySequence<T>(new_buff, new_size);
         };
+        void PushBack(const T& item) {
+            size_t new_size = size + 1;
+            DynamicArray<T> new_buff = make_buff(buff, buff.GetLength(), new_size);
+            for (size_t i = 0; i < size; i++) {
+                new_buff.Set(i, buff.Get(i));
+            }
+            new_buff.Set(size, item);
+            buff = new_buff;
+            size = new_size;
+        }
 };
