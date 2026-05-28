@@ -33,3 +33,29 @@ class EmptyBufferError : public Error {
     public:
         EmptyBufferError(const std::string& details) : Error("Buffer is empty") {}
 };
+
+class OptionalError : public Error {
+    public:
+        OptionalError(const std::string& details) : Error(details) {}
+};
+
+class CardinalError : public Error {
+    public:
+        CardinalError(const std::string& details) : Error(details) {}
+};
+
+class OrdinalError : public Error {
+    public:
+        OrdinalError(const std::string& details) : Error(details) {}
+};
+
+class StreamOpenError : public Error {
+public:
+    explicit StreamOpenError(const std::string& filename) 
+        : Error("failed to open file " + filename) {}
+};
+
+class EndOfStreamError : public Error {
+public:
+    EndOfStreamError() : Error("end of stream reached") {}
+};
