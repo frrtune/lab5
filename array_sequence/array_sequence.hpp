@@ -129,4 +129,8 @@ template <typename T> class ArraySequence : public Sequence <T> {
             buff = new_buff;
             size = new_size;
         }
+        void Set(size_t index, const T& value) {
+            if (index >= size) throw RangeError(index, size);
+            buff.Set(index, value);
+        }
 };
